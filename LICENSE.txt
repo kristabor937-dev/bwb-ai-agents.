@@ -1,0 +1,9 @@
+Commercial License
+
+Copyright (c) 2025 Kris Tabor.
+
+You are granted a non-exclusive, non-transferable license to
+use, modify, package, and sell this software as part of your own
+service or template. You may not resell the code "as-is" without
+adding value (configuration, documentation, or service).
+No warranty is provided. Use at your own risk.

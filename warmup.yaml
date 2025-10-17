@@ -1,0 +1,21 @@
+name: "Default Warmup"
+triggers:
+  - event: "lead.created"
+flow:
+  - after: "10m"
+    agent: "prospector"
+    action: "enrich_and_tag"
+  - after: "5m"
+    agent: "nurturer"
+    action: "send_sms"
+    template: "intro_sms_v1"
+  - wait_for: "sms_reply|email_reply|24h"
+  - if: "got_reply"
+    then:
+      - agent: "closer"
+        action: "offer_calendar_link"
+        template: "booking_sms_v1"
+    else:
+      - agent: "nurturer"
+        action: "send_email"
+        template: "intro_email_v1"
