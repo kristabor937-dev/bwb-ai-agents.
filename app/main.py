@@ -11,7 +11,11 @@ from dotenv import load_dotenv
 load_dotenv()
 app = FastAPI(title="BWB AI Agents")
 templates = Jinja2Templates(directory="app/templates")
+from fastapi.responses import HTMLResponse
 
+@app.get("/ui", response_class=HTMLResponse)
+async def serve_ui(request: Request):
+    return templates.TemplateResponse("ui.html", {"request": request})
 @app.middleware("http")
 async def check_key(request, call_next):
     if request.url.path.startswith("/ui"):
