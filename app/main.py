@@ -12,6 +12,9 @@ load_dotenv()
 import os
 from fastapi.responses import JSONResponse
 
+
+app = FastAPI(title="BWB AI Agents")
+templates = Jinja2Templates(directory="app/templates")
 @app.middleware("http")
 async def check_key(request, call_next):
     if request.url.path.startswith("/ui"):
@@ -19,9 +22,6 @@ async def check_key(request, call_next):
         if client_key != os.getenv("APP_KEY"):
             return JSONResponse({"error": "Unauthorized"}, status_code=401)
     return await call_next(request)
-app = FastAPI(title="BWB AI Agents")
-templates = Jinja2Templates(directory="app/templates")
-
 TWILIO_FROM = os.getenv("TWILIO_FROM", "+15555555555")
 TWILIO_SID  = os.getenv("TWILIO_SID", "ACxxxx")
 TWILIO_TOKEN= os.getenv("TWILIO_TOKEN", "twxxxx")
