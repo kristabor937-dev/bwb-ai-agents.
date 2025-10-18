@@ -5,3 +5,4 @@ sendgrid
 requests
 python-dotenv
 httpx
+jinja2
