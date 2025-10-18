@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+twilio
+sendgrid
+requests
+python-dotenv
