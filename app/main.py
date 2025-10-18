@@ -13,9 +13,6 @@ app = FastAPI(title="BWB AI Agents")
 templates = Jinja2Templates(directory="app/templates")
 from fastapi.responses import HTMLResponse
 
-@app.get("/ui", response_class=HTMLResponse)
-async def serve_ui(request: Request):
-    return templates.TemplateResponse("ui.html", {"request": request})
 @app.middleware("http")
 async def check_key(request, call_next):
     if request.url.path.startswith("/ui"):
@@ -23,6 +20,10 @@ async def check_key(request, call_next):
         if client_key != os.getenv("APP_KEY"):
             return JSONResponse({"error": "Unauthorized"}, status_code=401)
     return await call_next(request)
+
+@app.get("/ui", response_class=HTMLResponse)
+async def serve_ui(request: Request):
+    return templates.TemplateResponse("ui.html", {"request": request})
 TWILIO_FROM = os.getenv("TWILIO_FROM", "+15555555555")
 TWILIO_SID  = os.getenv("TWILIO_SID", "ACxxxx")
 TWILIO_TOKEN= os.getenv("TWILIO_TOKEN", "twxxxx")
