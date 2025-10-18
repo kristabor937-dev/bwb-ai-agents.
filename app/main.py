@@ -9,7 +9,16 @@ import httpx
 from dotenv import load_dotenv
 
 load_dotenv()
+import os
+from fastapi.responses import JSONResponse
 
+@app.middleware("http")
+async def check_key(request, call_next):
+    if request.url.path.startswith("/ui"):
+        client_key = request.headers.get("X-Key")
+        if client_key != os.getenv("APP_KEY"):
+            return JSONResponse({"error": "Unauthorized"}, status_code=401)
+    return await call_next(request)
 app = FastAPI(title="BWB AI Agents")
 templates = Jinja2Templates(directory="app/templates")
 
