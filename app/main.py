@@ -9,12 +9,9 @@ import httpx
 from dotenv import load_dotenv
 
 load_dotenv()
-import os
-from fastapi.responses import JSONResponse
-
-
 app = FastAPI(title="BWB AI Agents")
 templates = Jinja2Templates(directory="app/templates")
+
 @app.middleware("http")
 async def check_key(request, call_next):
     if request.url.path.startswith("/ui"):
